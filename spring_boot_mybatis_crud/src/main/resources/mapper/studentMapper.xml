@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.demo.mapper.StudentMapper">
+    <!--查找所有的学生按成绩的降序排列-->
+    <select id="getAllStudent" resultType="com.student.demo.bean.Student">
+        select * from student order by score desc
+    </select>
+    <!--添加一条数据-->
+    <insert id="insertStudent">
+        insert into student(name, age, money, gender, score, class_name) values(#{name}, #{age}, #{money}, #{gender}, #{score}, #{className})
+    </insert>
+    <sql id="cloumns">
+        id, name, age, money, gender, score, class_name
+    </sql>
+    <!--
+        按名字模糊查询
+        <include refid="cloumns"/> 值查找某些特定的字段
+    -->
+    <select id="selectStudentLikeName" resultType="com.student.demo.bean.Student">
+        select
+        <include refid="cloumns"/>
+        from student
+        <where>
+            <if test="name != null">
+                name like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+    <!--
+        删除一条数据
+    -->
+    <delete id="deleteStudent">
+        delete from student
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!--找出成绩大于多少分的学生-->
+    <select id="selectStudentScor" resultType="com.student.demo.bean.Student">
+        select <include refid="cloumns"/> from student
+        <where>
+            <if test="score != null">
+                score > #{score} order by score desc
+            </if>
+        </where>
+    </select>
+</mapper>
