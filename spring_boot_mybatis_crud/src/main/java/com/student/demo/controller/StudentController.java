@@ -64,4 +64,26 @@ public class StudentController {
    public List<Student> scoreStudent(Integer score){
       return studentMapper.selectStudentScor(score);
    }
+
+   /**
+    * 查询金额在 xx 和 xx 之间的学生
+    * @param smallMoney
+    * @param bigMoney
+    * @return
+    */
+   @GetMapping("getStudentMoney")
+   public List<Student> getStudentMoney(Integer smallMoney, Integer bigMoney){
+      return studentMapper.selectMoneyIn(smallMoney, bigMoney);
+   }
+
+   /**
+    * 更新一个学生的信息
+    * @param student
+    * @return
+    */
+   @PostMapping("/updateStudent")
+   public String updateStudent(Student student){
+      studentMapper.updateStudent(student);
+      return "success update";
+   }
 }

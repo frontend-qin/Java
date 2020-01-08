@@ -37,4 +37,17 @@ public interface StudentMapper {
      */
   List<Student> selectStudentScor(int score);
 
+  /**
+   * 找出 金钱 在 x 和 x之间的学生
+   * @param money1
+   * @param money2
+   * @return
+   */
+  List<Student> selectMoneyIn(Integer money1, Integer money2);
+
+  /**
+   * 更新id为 xx 的学生信息
+   * @param student
+   */
+  void updateStudent(Student student);
 }

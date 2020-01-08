@@ -41,11 +41,36 @@
     </delete>
     <!--找出成绩大于多少分的学生-->
     <select id="selectStudentScor" resultType="com.student.demo.bean.Student">
-        select <include refid="cloumns"/> from student
+        select
+        <include refid="cloumns"/>
+        from student
         <where>
             <if test="score != null">
                 score > #{score} order by score desc
             </if>
         </where>
     </select>
+    <!--找出金额在 x 和 x 之间的学生, 并按降序排列 -->
+    <select id="selectMoneyIn" resultType="com.student.demo.bean.Student">
+        select
+        <include refid="cloumns"/>
+        from student
+        <where>
+            money between #{money1} and #{money2} order by money desc
+        </where>
+    </select>
+    <!-- 更新 某个 学生的信息 -->
+    <update id="updateStudent">
+        update student set name=#{name},
+        age=#{age},
+        money=#{money},
+        gender=#{gender},
+        score=#{score},
+        class_name=#{className}
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+        </where>
+    </update>
 </mapper>
