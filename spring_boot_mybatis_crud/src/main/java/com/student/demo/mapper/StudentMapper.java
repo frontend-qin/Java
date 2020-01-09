@@ -18,6 +18,11 @@ public interface StudentMapper {
   void insertStudent(Student student);
 
     /**
+     * 批量插入数据
+     * @param studentList
+     */
+  void insertSomeStudent(List<Student> studentList);
+    /**
      * 模糊查询名字是 xx 的学生
      * @param name
      * @return
@@ -44,7 +49,6 @@ public interface StudentMapper {
    * @return
    */
   List<Student> selectMoneyIn(Integer money1, Integer money2);
-
   /**
    * 更新id为 xx 的学生信息
    * @param student

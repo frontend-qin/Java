@@ -1,5 +1,9 @@
 package com.student.demo.bean;
 
+
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description="学生实体对象")
 public class Student {
     private Integer id;
     private String name;

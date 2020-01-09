@@ -1,9 +1,24 @@
+# 配置数据库
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/demo
+# 配置 mybatis的xml映射
 mybatis:
   config-location: classpath:config/sqlmaper.xml
   mapper-locations: classpath:mapper/*.xml
+# 配置swagger 文档
+swigger:
+  title: 接口测试
+  description: mybatis 数据查询 测试
+  version: 1.0.0.RELEASE
+  license: Apache License, Version 2.0
+  licenseUrl: https://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfServiceUrl: https://github.com/dyc87112/spring-boot-starter-swagger
+  contact:
+    name: 老秦
+    email: 694170828@qq.com
+  base-package: com.student.demo
+  base-url: /**

@@ -2,13 +2,15 @@ package com.student.demo.controller;
 
 import com.student.demo.bean.Student;
 import com.student.demo.mapper.StudentMapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(tags = "学生信息表")
 @RestController
-@RequestMapping("student")
+@RequestMapping("student") // 这里配置路由映射都在/student下
 public class StudentController {
    @Autowired
    private StudentMapper studentMapper;
@@ -17,6 +19,7 @@ public class StudentController {
     * 获取所有的学生
     * @return
     */
+   @ApiOperation(value = "获取学生列表")
    @GetMapping("getList")
     public List<Student> getStudentList(){
        return studentMapper.getAllStudent();
@@ -28,9 +31,22 @@ public class StudentController {
     * @return
     */
    @PostMapping("insert")
+   @ApiOperation(value = "创建学生信息", notes = "根据Student对象创建用户")
    public String insertStudent(Student student){
       studentMapper.insertStudent(student);
       return "insert success";
+   }
+
+   /**
+    * 批量插入多条数据到数据库
+    * @param studentList
+    * @return
+    */
+   @ApiOperation(value="批量创建学生信息", notes = "根据List(数组)类型的<Student>对象")
+   @PostMapping("insertStudents")
+   public String insertStudents(@RequestBody List<Student> studentList){
+      studentMapper.insertSomeStudent(studentList);
+      return "add list success";
    }
 
    /**
@@ -38,9 +54,9 @@ public class StudentController {
     * @param name
     * @return
     */
+   @ApiOperation(value = "按名字进行模糊查询学生信息")
    @GetMapping("likeName")
    public List<Student> selectStudentLikeName(String name){
-      System.out.println(name);
       return studentMapper.selectStudentLikeName(name);
    }
 
@@ -49,6 +65,7 @@ public class StudentController {
     * @param id
     * @return
     */
+   @ApiOperation(value="根据id删除对应的学生")
    @GetMapping("{id}")
    public String deleteStudent(@PathVariable("id") Integer id){
       studentMapper.deleteStudent(id);
@@ -60,6 +77,7 @@ public class StudentController {
     * @param score
     * @return
     */
+   @ApiOperation(value="获取成绩大于 多少分的学生")
    @GetMapping("scoreStudent")
    public List<Student> scoreStudent(Integer score){
       return studentMapper.selectStudentScor(score);
@@ -71,6 +89,7 @@ public class StudentController {
     * @param bigMoney
     * @return
     */
+   @ApiOperation(value="获取金额在 xx 和 xx 之间的学生")
    @GetMapping("getStudentMoney")
    public List<Student> getStudentMoney(Integer smallMoney, Integer bigMoney){
       return studentMapper.selectMoneyIn(smallMoney, bigMoney);
@@ -81,6 +100,7 @@ public class StudentController {
     * @param student
     * @return
     */
+   @ApiOperation(value="根据 id 更新一个学生的信息")
    @PostMapping("/updateStudent")
    public String updateStudent(Student student){
       studentMapper.updateStudent(student);

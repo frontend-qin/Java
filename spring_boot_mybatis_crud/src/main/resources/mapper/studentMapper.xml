@@ -3,17 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.student.demo.mapper.StudentMapper">
+
     <!--查找所有的学生按成绩的降序排列-->
     <select id="getAllStudent" resultType="com.student.demo.bean.Student">
         select * from student order by score desc
     </select>
+
     <!--添加一条数据-->
     <insert id="insertStudent">
         insert into student(name, age, money, gender, score, class_name) values(#{name}, #{age}, #{money}, #{gender}, #{score}, #{className})
     </insert>
+
+    <!--批量插入学生-->
+    <insert id="insertSomeStudent">
+        insert into
+        student(name, age, money, gender, score, class_name) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.age}, #{item.money},
+            #{item.gender}, #{item.score}, #{item.className})
+        </foreach>
+    </insert>
+
+    <!--定义返回的sql字段-->
     <sql id="cloumns">
         id, name, age, money, gender, score, class_name
     </sql>
+
     <!--
         按名字模糊查询
         <include refid="cloumns"/> 值查找某些特定的字段
@@ -28,6 +43,7 @@
             </if>
         </where>
     </select>
+
     <!--
         删除一条数据
     -->
@@ -39,6 +55,7 @@
             </if>
         </where>
     </delete>
+
     <!--找出成绩大于多少分的学生-->
     <select id="selectStudentScor" resultType="com.student.demo.bean.Student">
         select
@@ -50,6 +67,7 @@
             </if>
         </where>
     </select>
+
     <!--找出金额在 x 和 x 之间的学生, 并按降序排列 -->
     <select id="selectMoneyIn" resultType="com.student.demo.bean.Student">
         select
@@ -59,18 +77,50 @@
             money between #{money1} and #{money2} order by money desc
         </where>
     </select>
+
+    <!-- 更新 某个 学生的信息 -->
+    <!--    <update id="updateStudent">-->
+    <!--        update student set name=#{name},-->
+    <!--        age=#{age},-->
+    <!--        money=#{money},-->
+    <!--        gender=#{gender},-->
+    <!--        score=#{score},-->
+    <!--        class_name=#{className}-->
+    <!--        <where>-->
+    <!--            <if test="id != null">-->
+    <!--                id=#{id}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </update>-->
+
     <!-- 更新 某个 学生的信息 -->
     <update id="updateStudent">
-        update student set name=#{name},
-        age=#{age},
-        money=#{money},
-        gender=#{gender},
-        score=#{score},
-        class_name=#{className}
+        update student
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="age != null">
+                age=#{age},
+            </if>
+            <if test="money != null">
+                money=#{money},
+            </if>
+            <if test="gender != null">
+                gender=#{gender},
+            </if>
+            <if test="score != null">
+                score=#{score},
+            </if>
+            <if test="class_name != null">
+                class_name=#{className}
+            </if>
+        </set>
         <where>
             <if test="id != null">
                 id=#{id}
             </if>
         </where>
     </update>
+
 </mapper>
