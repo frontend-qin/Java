@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.admin.utils.JwtToken",
+      "sourceType": "com.admin.utils.JwtToken"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

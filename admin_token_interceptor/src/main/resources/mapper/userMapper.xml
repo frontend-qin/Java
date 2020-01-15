@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.UserMapper">
+    <sql id="cloumns">
+        id, account, password, type
+    </sql>
+    <!--创建用户-->
+    <insert id="insertUser">
+        insert into tb_user(account, password, type) values(#{account}, #{password}, #{type})
+    </insert>
+
+    <!-- 按照账户名 查询用户-->
+    <select id="selectUserByAccount" resultType="com.admin.entity.User">
+        select <include refid="cloumns"/> from tb_user
+        <where>
+            <if test="account != null">
+                account = #{account}
+            </if>
+        </where>
+    </select>
+</mapper>
